@@ -1,14 +1,14 @@
 import random
 import sqlite3
 
-conn = sqlite3.connect('card.s3db')  # подключились к базе данных
-cur = conn.cursor()  # установка курсора базы данных
+conn = sqlite3.connect('card.s3db')  # making of DB
+cur = conn.cursor()  # DB cursor for SQlite3 operations
 
 log_ins = dict("")
 balances = dict("")
 accountID = dict("")
-
-cur.execute('''
+# here we are making a DB table to collect cards info
+cur.execute('''         
 CREATE TABLE IF NOT EXISTS card(
         id INTEGER,
         number TEXT,
@@ -18,7 +18,7 @@ CREATE TABLE IF NOT EXISTS card(
 ''')
 
 class Card:
-    def __init__(self):  # конструктор карты
+    def __init__(self):  # main body of card creator
         global spin
         spin = random.randint(000000000, 999999999)
         Card.luhnCreate(self)
@@ -39,7 +39,7 @@ class Card:
         print(self.pin)
         Card.saveclient(self)
 
-    def luhnCreate(self):
+    def luhnCreate(self):  # creates luhn correct card number
         self.numb_luhn = random.sample(range(10), 9)
         self.sample = self.numb_luhn.copy()
         self.counter = 8
@@ -58,7 +58,7 @@ class Card:
             self.cardnumber += str(self.numb_luhn[i])
 
 
-    def saveclient(self):   # процесс сохранения клиента по 3-м составляющим
+    def saveclient(self):   # client saving process
         self.x = int(self.cardnumber)
         self.y = int(self.pin)
         self.clientID = spin
@@ -69,12 +69,12 @@ class Card:
 
 
 tmp_check = int()  # tmp checksum for luhn checker
-luhn_checksum = int()
+luhn_checksum = int() # luhn checksum for luhn checker
 
 # checks if lg1 is luhn correct or not, returns tmp check with same card num if OK
-# 4000001376082491
+# for luhn checker debug you can use: 4000001376082491
 
-def luhnChecker(lg1):
+def luhnChecker(lg1):           # luhn checker body
     global tmp_check, luhn_checksum
     tmp_check = int(0)
     if len(str(lg1)) == 16:
@@ -101,10 +101,10 @@ def luhnChecker(lg1):
         return tmp_check
 
 
-def logged_out(chInt):  # основное меню
+def logged_out(chInt):  # main menu
     if chInt == 1:  # create new card
-        spin = Card()  # spin присваивает ID клиенту, остальное делает конструктор
-    elif chInt == 2:  # ну тут всё понятно
+        spin = Card()  # spin is a cliend ID 
+    elif chInt == 2:  # login process
         print("Enter your card number:")
         lg1 = str(input())
         luhnChecker(lg1)
@@ -133,29 +133,25 @@ def logged_out(chInt):  # основное меню
         print("Bye!")
         conn.commit()
         exit()
-    elif chInt == 7:    # debug, delete all clients to re-create table
+    elif chInt == 7:    # debug, deletes all clients to re-create table
         cur.execute('DROP TABLE card;')
         print("table 'card' deleted, please restart this program")
         conn.commit()
         exit()
-    elif chInt == 9:  # debug, clients list
+    elif chInt == 9:  # debug, clients list prints in console 
         print("clients:")
         cur.execute('SELECT * FROM card;')
         print(cur.fetchall())
-    elif chInt == "":
+    elif chInt == "": 
         print("Wrong input!")
-    elif chInt == 8:
-        print("enter test num")
-        lg1 = int(input())
-        luhnChecker(lg1)
     else:  # wrong num
         print("Wrong input! Please, try again.")
 
 
-def logged_in(lg1):  # внутри системы
+def logged_in(lg1):  # logged in using card num
     cur.execute(f'SELECT balance FROM card WHERE number = {lg1};')
-    logged_in_balance = str(cur.fetchone())
-    logged_in_balance = int(logged_in_balance[1:(len(logged_in_balance) - 2)])
+    logged_in_balance = str(cur.fetchone())     # we store balance untill logged out
+    logged_in_balance = int(logged_in_balance[1:(len(logged_in_balance) - 2)]) # here we make data look good 
 
     print(f"""
     1. Balance
@@ -177,7 +173,7 @@ def logged_in(lg1):  # внутри системы
         print("Income was added!")
         conn.commit()
         logged_in(lg1)
-    elif chInt == 3:    # do transfer
+    elif chInt == 3:    # transfer
         print("""
     Transfer
     Enter card number:""")
@@ -213,13 +209,14 @@ def logged_in(lg1):  # внутри системы
             print("""
     Probably you made a mistake in the card number. Please try again!""")
             logged_in(lg1)
-    elif chInt == 4:    # close account
+    elif chInt == 4:    # deletes account 
         cur.execute(f'DELETE FROM card WHERE number = {lg1};')
         conn.commit()
         print('The account has been closed!')
         pass
     elif chInt == 5:  # log out
         print("You have successfully logged out!")
+        conn.commit()
         pass
     elif chInt == 0:  # exit
         print("Bye!")
@@ -229,7 +226,7 @@ def logged_in(lg1):  # внутри системы
         print("Wrong")
 
 
-for spin in range(99999999999):
+for spin in range(99999999999): # sping makes ID for every card
     print("""
     1. Create an account
     2. Log into account
