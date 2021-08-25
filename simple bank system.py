@@ -19,7 +19,6 @@ CREATE TABLE IF NOT EXISTS card(
 
 class Card:
     def __init__(self):  # main body of card creator
-        global spin
         spin = random.randint(000000000, 999999999)
         Card.luhnCreate(self)
         cur.execute(f'SELECT pin FROM card WHERE number = {self.cardnumber};')
@@ -225,8 +224,7 @@ def logged_in(lg1):  # logged in using card num
     else:  # wrong input
         print("Wrong")
 
-
-for spin in range(99999999999): # sping makes ID for every card
+while True: # infinite roller
     print("""
     1. Create an account
     2. Log into account
