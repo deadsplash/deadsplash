@@ -6,4 +6,5 @@
 - 📫 My email: deadsplashmail@gmail.com
 
 **/Information for employers**
+
 Please, check my github.com/deadsplash root directory to check all my projects, so you can understand my skills. Thank you.
