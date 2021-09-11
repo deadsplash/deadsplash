@@ -5,6 +5,7 @@
 - ⏳ Learning in progress: Django, Flask, Pandas, Docker.
 - 📫 My email: deadsplashmail@gmail.com
 
-**/Information for employers**
 
-Please, check my github.com/deadsplash root directory to check all my projects, so you can understand my skills. Thank you.
+**INFORMATION FOR EMPLOYERS**
+
+Please, check my _github.com/deadsplash_ root directory to check all my projects, so you can understand my skills. Thank you.
