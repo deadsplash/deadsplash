@@ -1,6 +1,9 @@
 - 👋 Hi, I’m @deadsplash
-- 👀 I’m interested in music produsing, backend programming and travelling through the world. 
-- 🌱 I’m currently learning Python 3, SQLite 3, HTTP request, JSON data processing, and more.
+- 👀 I am a music maker, coffee-lover, and a huge IDM fan.
+- 🌱 I currently work with Python 3, SQLite 3, HTTP requests, JSON data processing, simple WEB parsers.
 - 💞️ I’m looking to change my life from a homegrowth music mixing engineer to a person who made something huge.
-- 📫 How to reach me: deadsplashmail@gmail.com
+- ⏳ Learning in progress: Django, Flask, Pandas, Docker.
+- 📫 My email: deadsplashmail@gmail.com
 
+**/Information for employers**
+Please, check my github.com/deadsplash root directory to check all my projects, so you can understand my skills. Thank you.
